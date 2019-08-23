@@ -8,27 +8,26 @@ class UnconnectedSignup extends Component {
     this.state = {
       username: "",
       password: "",
-      registered:false
+      registered: false
     };
   }
 
-  submitsignupHandler = (evt) => {
-      evt.preventDefault()
-      console.log ("signup form submitted")
-      let data = new FormData()
-      data.append("username",this.state.username)
-      data.append("password",this.state.password)
-      let response =await fetch("/signup",
-       {method:"POST",body:data})
-       let responsebody= await response.text()
-     let body =JSON.parse(responsebody)
+  submitsignupHandler = async evt => {
+    evt.preventDefault();
+    console.log("signup form submitted");
+    let data = new FormData();
+    data.append("username", this.state.username);
+    data.append("password", this.state.password);
+    let response = await fetch("/signup", { method: "POST", body: data });
+    let responsebody = await response.text();
+    let body = JSON.parse(responsebody);
 
-     if(body.success === false){
-         this.setState ({registered:false});
-         return;
-     }
-     console.log("parsed body",body);
-     this.setState ({registered:true});
+    if (body.success === false) {
+      this.setState({ registered: false });
+      return;
+    }
+    console.log("parsed body", body);
+    this.setState({ registered: true });
     //  Swal.fire({
     //      text:'Account created.',
     //      showConfirmButton:false,

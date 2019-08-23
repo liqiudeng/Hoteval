@@ -11,9 +11,16 @@ reloadMagic(app);
 let dbo = undefined;
 let url =
   "mongodb+srv://isabella:a@cluster0-nxd5k.mongodb.net/test?retryWrites=true&w=majority";
-MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
-  dbo = db.db("media-board");
-});
+MongoClient.connect(
+  url,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  },
+  (err, db) => {
+    dbo = db.db("media-board");
+  }
+);
 let session = {};
 app.use(cookieParser());
 app.use("/", express.static("build")); // Needed for the HTML and JS files
