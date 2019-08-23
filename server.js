@@ -9,6 +9,8 @@ let upload = multer({ dest: __dirname + "/upload/" });
 let cookieParser = require("cookie-parser");
 reloadMagic(app);
 let dbo = undefined;
+let db = require("");
+
 let url =
   "mongodb+srv://isabella:a@cluster0-nxd5k.mongodb.net/test?retryWrites=true&w=majority";
 MongoClient.connect(
@@ -27,6 +29,21 @@ app.use("/", express.static("build")); // Needed for the HTML and JS files
 app.use("/", express.static("public")); // Needed for local assets
 
 // Your endpoints go after this line
+app.get("/all-items", (req, res) => {
+  console.log("all-items", req.body);
+  dbo
+    .collectin("Items")
+    .find({})
+    .toArray((err, items) => {
+      if (err) {
+        console.log("error", err);
+        res.send("fail");
+        return;
+      }
+      console.log("items", items);
+      res.send(JSON.stringify(items));
+    });
+});
 app.post("/signup", upload.none(), (req, res) => {
   console.log("signup", req.body);
   let name = req.body.username;
@@ -78,6 +95,7 @@ app.post("/login", upload.none(), (req, res) => {
     });
   }
 });
+
 // Your endpoints go before this line
 
 app.all("/*", (req, res, next) => {

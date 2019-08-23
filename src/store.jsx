@@ -7,8 +7,14 @@ let reducer = (state, action) => {
   if (action.type === "username") {
     return {
       ...state,
-      username: action.username
+      username: action.username,
+      sessionId: action.sid
     };
+  }
+  if (action.type === "all-items") {
+    let newList = action.allItems;
+    newList = newList.reverse();
+    return { ...state, allItems: newList };
   }
   return state;
 };
@@ -16,7 +22,8 @@ const store = createStore(
   reducer,
   {
     searchQuery: "",
-    username: undefined
+    username: undefined,
+    allItems:[]
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
