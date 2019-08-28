@@ -66,7 +66,7 @@ class Footer extends Component {
         <div className="container">
           <p>Back to Top</p>
           <p className="footer-copy">
-            &copy; 2019 Trade Market – All Rights Reserved
+            &copy; 2019 Hoteval – All Rights Reserved
           </p>
         </div>
       </div>

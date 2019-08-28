@@ -1,24 +1,26 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import { Link } from "react-router-dom";
+// import "./Login.css";
+import Items from "./Items.jsx";
 class UnconnectedLogin extends Component {
   constructor(props) {
     super(props);
     this.state = {
       username: "",
       password: "",
-      LoginStatus: false
+      failedLogin: undefined
     };
   }
-  usernameChange = event => {
-    console.log("new username", event.target.value);
-    this.setState({ username: event.target.value });
+  handleUsername = evt => {
+    console.log("username", evt.target.value);
+    this.setState({ username: evt.target.value });
   };
-  passwordChange = event => {
-    console.log("new password", event.target.value);
-    this.setState({ password: event.target.value });
+  handlePassword = evt => {
+    console.log("password", evt.target.value);
+    this.setState({ password: evt.target.value });
   };
-  submitHandler = async evt => {
+  handleSubmit = async evt => {
     evt.preventDefault();
     console.log("login form submitted");
     let data = new FormData();
@@ -30,7 +32,7 @@ class UnconnectedLogin extends Component {
       credentials: "include"
     });
     let responseBody = await response.text();
-    console.log("responseBody from login", responseBody);
+    console.log("responseBody form login", responseBody);
     let body = JSON.parse(responseBody);
     console.log("parsed body", body);
     if (!body.success) {
@@ -38,33 +40,94 @@ class UnconnectedLogin extends Component {
         type: "username",
         username: ""
       });
-      this.setState({ LoginStatus: false });
+      this.setState({ failedLogin: false });
       return;
-    } else {
+    }
+    let response2 = await fetch("/update-cart", {
+      method: "POST",
+      credentials: "include"
+    });
+    let responseBody2 = await response2.text();
+    let body2 = JSON.parse(responseBody2);
+    console.log("parsed body", body2);
+    if (body.success) {
+      console.log(body2, "body");
       this.props.dispatch({
         type: "username",
         username: body.username,
-        sid: body.sid
+        sid: body.sid,
+        firstName: body.fName,
+        lastName: body.lName,
+        cartLength: body2.cartLength,
+        cart: body2.cart
       });
-      this.setState({ LoginStatus: true });
+      this.setState({ failedLogin: true });
       return;
     }
   };
-
   render = () => {
+    if (this.state.failedLogin === false) {
+      return (
+        <div>
+          <h2>Login failed, please try again</h2>
+        </div>
+      );
+    }
+    if (this.state.failedLogin === true) {
+      return (
+        <div>
+          <Items />
+        </div>
+      );
+    }
     return (
       <div>
-        <form onSubmit={this.submitHandler}>
-          {" "}
-          Username <input
-            type="text"
-            onChange={this.usernameChange}
-          /> Password <input type="text" onChange={this.passwordChange} />{" "}
-          <input type="submit" value="login" />
-        </form>
+        <div className="container white">
+          <div>
+            <form className="white" onSubmit={this.handleSubmit}>
+              <h5 className="grey-text text-darken-3">Log in </h5>
+              <div className="input-field">
+                <label htmlFor="email">Email</label>
+                <input type="email" id="email" onChange={this.handleUsername} />
+              </div>
+              <div className="input-field">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  onChange={this.handlePassword}
+                />
+              </div>
+              <div className="input-field">
+                <input
+                  className="btn pink lighten-1 z-depth-0"
+                  type="submit"
+                  value="Login"
+                />
+              </div>
+            </form>
+            <p> Or </p>
+            <div>
+              <Link className="btn pink lighten-1 z-depth-0" to="/signup">
+                Signup
+              </Link>
+            </div>
+            {/* <div>
+              <Link to="/">Return to marketplace</Link>
+            </div> */}
+          </div>
+        </div>
       </div>
     );
   };
 }
-let Login = connect()(UnconnectedLogin);
+let mapStateToProps = st => {
+  return {
+    username: st.username,
+    sid: st.sid,
+    firstName: st.fName,
+    lastName: st.lName
+  };
+};
+let Login = connect(mapStateToProps)(UnconnectedLogin);
 export default Login;

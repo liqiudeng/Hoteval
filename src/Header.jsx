@@ -30,12 +30,14 @@ class Header extends Component {
     console.log(this.props.firstName);
     if (this.props.username === "" || this.props.username === undefined) {
       return (
-        <div className={this.state.activeClass}>
+        <div className="nav-wrapper grey darken-3">
           <div className="flex container">
-            <div className="lgo">
-              <Link to="/">Trade Market ↵</Link>
+            <div className="brand-logo">
+              <Link to="/">
+                <img src="logo.png" height="50px" />{" "}
+              </Link>
             </div>
-            <div className="log-cart">
+            <div className="flex container">
               <div>
                 <Link to="/search">
                   <img
@@ -46,12 +48,18 @@ class Header extends Component {
                   Search
                 </Link>
               </div>
-              <div className="log-link">
-                <Link to="/login">Login</Link>
+              <div className="right">
+                <div>
+                  {" "}
+                  <Link to="/login">Login</Link>
+                </div>
+                <div>
+                  <Link to="/signup">Signup</Link>
+                </div>
               </div>
-              <div className="bag">
+              <div className="right">
                 <NavLink to="/shopping-cart">
-                  <img src="/upload/13-512.png" width="15px" />
+                  <img src="cart1.png" width="50px" />
                 </NavLink>
               </div>
             </div>
@@ -60,10 +68,17 @@ class Header extends Component {
       );
     } else {
       return (
-        <div className={this.state.activeClass}>
+        <div className="nav-wrapper grey darken-3">
           <div className="flex container">
-            <div className="lgo">
-              <Link to="/">Trade Market ↵</Link>
+            <div className="brand-logo">
+              <Link to="/">
+                <img src="icons8-mobile-home-64.png" height="40px" />{" "}
+              </Link>
+            </div>
+            <div>
+              <Link to="/">
+                <h3 className="lgo">Welcome to Montreal</h3>
+              </Link>
             </div>
             <div className="log-cart-in">
               <div>
@@ -76,22 +91,26 @@ class Header extends Component {
                   Search
                 </Link>
               </div>
-              <div>
+              {/* <div>
                 <Link to="/new-listing">Create Listing</Link>
-              </div>
+              </div> */}
               <div>
-                <a>
-                  Hi,{" "}
-                  {this.props.firstName.charAt(0).toUpperCase() +
-                    this.props.firstName.slice(1)}
-                </a>
-                <a className="log-out-link" onClick={this.logoutHandler}>
-                  Logout
-                </a>
+                <div>
+                  <a>
+                    Hi,{" "}
+                    {this.props.firstName.charAt(0).toUpperCase() +
+                      this.props.firstName.slice(1)}
+                  </a>
+                </div>
+                <div>
+                  <a className="log-out-link" onClick={this.logoutHandler}>
+                    Logout
+                  </a>
+                </div>
               </div>
               <div>
                 <NavLink to="/shopping-cart">
-                  <img src="/upload/13-512.png" width="12px" />
+                  <img src="cart1.png" width="50px" />
                 </NavLink>{" "}
                 ({this.props.addToCartItems})
               </div>
