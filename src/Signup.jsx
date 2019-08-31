@@ -56,26 +56,35 @@ class UnconnectedSignup extends Component {
       this.setState({ registered: false });
       return;
     } else {
+      //update the info to store
+      console.log(body.username, "body");
+      // this.props.dispatch({
+      //   type: "username",
+      //   username: body.username,
+      //   sid: body.sid,
+      //   firstName: body.fName,
+      //   lastName: body.lName
+      // });
+      this.setState({ registered: true });
+      //update the chart
       let response2 = await fetch("/update-cart", {
         method: "POST",
         credentials: "include"
       });
+      //obtain info from back end
       let responseBody2 = await response2.text();
       let body2 = JSON.parse(responseBody2);
       console.log("parsed body", body2);
-      if (body.success) {
-        console.log(body2, "body");
-        this.props.dispatch({
-          type: "username",
-          username: body.username,
-          sid: body.sid,
-          firstName: body.fName,
-          lastName: body.lName,
-          cartLength: body2.cartLength,
-          cart: body2.cart
-        });
-        this.setState({ registered: true });
-      }
+      this.props.dispatch({
+        type: "username",
+        username: body.username,
+        sid: body.sid,
+        firstName: body.fName,
+        lastName: body.lName,
+        cartLength: body2.cartLength,//???
+        cart: body2.cart    //???
+      })
+      return
     }
   };
   render = () => {
