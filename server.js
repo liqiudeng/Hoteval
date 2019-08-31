@@ -33,6 +33,7 @@ app.post("/signup", upload.none(), (req, res) => {
   let fName = req.body.firstName;
   let lName = req.body.lastName;
   let password = req.body.password;
+ 
   if (username !== "" && password !== "") {
     dbo.collection("users").findOne({ username: username }, (err, user) => {
       console.log(user, "user");
@@ -51,12 +52,33 @@ app.post("/signup", upload.none(), (req, res) => {
         dbo
           .collection("users")
           .insertOne({ username, password: sha1(password), fName, lName });
-        res.send({ success: true });
+          //operate the login actions 
+          let sid = Math.floor(Math.random() * 10000000);
+          sessions[sid] = username;
+          res.cookie("sid", sid);
+          //send the info to front end
+          console.log(username,"000000000000000000000")
+          res.send({
+            success: true,
+            username: username,
+            sid: sid,
+            fName: fName,
+            lName: lName
+          });
         return;
       }
     });
   }
 });
+
+app.post("/onlineService",upload.none(),(req, res) => {
+  let username = req.body.username;
+  let password = req.body.message;
+  if (username !=="" && message !=="") {
+    dbo.collection("onlineService").insertOne({username,message});
+  }
+})
+
 
 app.post("/login", upload.none(), (req, res) => {
   let username = req.body.username;
