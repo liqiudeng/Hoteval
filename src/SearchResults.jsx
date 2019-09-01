@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+
 class UnconnectedSearchResults extends Component {
   render = () => {
     if (this.props.query === "" || undefined) {
@@ -9,28 +10,24 @@ class UnconnectedSearchResults extends Component {
     let searchResults = this.props.allItems.filter(each => {
       let title = each.title.toLowerCase();
       let desc = each.description.toLowerCase();
-
-      return (
-        title.includes(this.props.query.toLowerCase()) ||
-        desc.includes(this.props.query.toLowerCase())
-      );
+      if (this.props.inStock && !each.inStock) return false;
+      else
+        return (
+          (title.includes(this.props.query.toLowerCase()) ||
+            desc.includes(this.props.query.toLowerCase())) &&
+          (each.price >= this.props.min && each.price <= this.props.max)
+        );
     });
+
     return (
-      <div className="flex container">
+      <div className="flex container searchBarResault">
         {searchResults.map(each => {
           return (
-            <div>
-              <div className="lex container white">
+            <div className="row">
+              <div className="col s12">
                 <div>
-                  <Link
-                    to={"/itemDescription/" + each._id}
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "space-between"
-                    }}
-                  >
-                    <img src={each.images[0]} width="50px" />
+                  <Link to={"/itemDescription/" + each._id}>
+                    <img src={each.images[0]} width="100px" />
                   </Link>{" "}
                 </div>
                 <div>
@@ -48,18 +45,18 @@ class UnconnectedSearchResults extends Component {
             </div>
           );
         })}
-        {/* <div>
-          <Link to={"/"}>Return to marketplace</Link>
-        </div> */}
       </div>
     );
   };
 }
 
-let mapStateToProps = storeState => {
+let mapStateToProps = st => {
   return {
-    query: storeState.searchQuery,
-    allItems: storeState.allItems
+    query: st.searchQuery,
+    allItems: st.allItems,
+    min: st.min,
+    max: st.max,
+    inStock: st.inStock
   };
 };
 let SearchResults = connect(mapStateToProps)(UnconnectedSearchResults);

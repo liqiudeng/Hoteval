@@ -13,15 +13,15 @@ import ItemDescription from "./ItemDescription.jsx";
 import Cart from "./Cart.jsx";
 import Footer from "./Footer.jsx";
 import OwnerPage from "./OwnerPage.jsx";
-
+import ReviewPage from "./ReviewPage.jsx";
 class App extends Component {
   renderHomePage = () => {
     this.renderListingItems();
     return (
       <div>
         <Header />
-        <Search />
-        <SearchResults />
+        {/* <Search /> */}
+        {/* <SearchResults /> */}
         <Items />
         <Footer />
       </div>
@@ -35,11 +35,9 @@ class App extends Component {
         <div>
           <Search />
         </div>
-
         <div>
           <SearchResults />
         </div>
-        <Footer />
       </div>
     );
   };
@@ -68,8 +66,10 @@ class App extends Component {
     })[0];
     return (
       <div>
-        <Header />
-        {<ItemDescription item={item} />}
+        <div>
+          <Header />
+        </div>
+        <div>{<ItemDescription item={item} />}</div>
         <Footer />
       </div>
     );
@@ -84,11 +84,23 @@ class App extends Component {
       <div>
         <Header />
         {<OwnerPage items={items} />}
-        <Footer />
       </div>
     );
   };
-
+  renderReviewPage = routerData => {
+    let itemId = routerData.match.params._id;
+    console.log(routerData);
+    let relatedReview = review.filter(comment => {
+      return review.itemId === item;
+    });
+    console.log(item, "checking review");
+    return (
+      <div>
+        <Header />
+        {<ReviewPage item={item} />}
+      </div>
+    );
+  };
   renderCartPage = () => {
     return (
       <div>
@@ -138,8 +150,8 @@ class App extends Component {
 
           <Route
             exact={true}
-            path="/new-listing"
-            render={this.renderListingPage}
+            path="/review/:_id"
+            render={this.renderReviewPage}
           />
           <Route
             exact={true}

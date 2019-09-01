@@ -69,6 +69,9 @@ class Footer extends Component {
             &copy; 2019 Hoteval – All Rights Reserved
           </p>
         </div>
+        <nav>
+          
+        </nav>
       </div>
     );
   };

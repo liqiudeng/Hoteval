@@ -5,21 +5,21 @@ class OwnerPage extends Component {
   render = () => {
     return (
       <div>
-        <div className="container seller-items">
+        <div className="container">
           {" "}
-          <h2>{this.props.items[0].seller}</h2>
+          <h2>{this.props.items[0].title}'s Other Rooms</h2>
         </div>
 
-        <div className="flex container items-sold">
+        <div className="flex container">
           {this.props.items.map(item => {
             return (
-              <div className="item">
-                <div className="each-item">
+              <div className="item-sold">
+                <div className="flex each-item">
                   <Link to={"/itemDescription/" + item._id}>
                     <img src={item.images[0]} height="200px" width="165px" />
                   </Link>
                 </div>
-                <div className="each-item">{item.title}</div>
+                {/* <div className="each-item">{item.title}</div> */}
                 <div className="item-price">${item.price} CAD</div>
               </div>
             );

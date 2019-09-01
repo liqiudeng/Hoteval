@@ -103,42 +103,34 @@ app.get("/logout", (req, res) => {
   let sessionId = req.cookies.sid;
   delete sessions[sessionId];
 });
-
-// app.post("/newItem", upload.array("image", 5), (req, res) => {
-//   let name =
-//     req.body.fName.charAt(0).toUpperCase() +
-//     req.body.fName.slice(1) +
-//     " " +
-//     req.body.lName.charAt(0).toUpperCase() +
-//     req.body.lName.slice(1);
-//   let title = req.body.title;
-//   let desc = req.body.description;
-//   let cat = req.body.categories;
-//   let price = req.body.price;
-//   let images = req.files;
-//   let img = [];
-//   for (let i = 0; i < images.length; i++) {
-//     img.push("/upload/" + req.files[i].filename);
-//   }
-//   console.log(img);
-//   if (name === "Undefined Undefined") {
-//     res.send({ success: false });
-//   }
+// app.get("/send-items", (req, res) => {
 //   dbo
 //     .collection("items")
-//     .insertOne({
-//       title: title,
-//       description: desc,
-//       price: price,
-//       images: img,
-//       category: cat,
-//       seller: name
-//     })
-//     .then(result => {
-//       res.send({ success: true, item: result.ops[0] });
+//     .find({})
+//     .toArray((err, items) => {
+//       if (err) {
+//         console.log("error", err);
+//         res.send({ success: false });
+//         return;
+//       }
+//       res.send(JSON.stringify(items));
 //     });
 // });
-
+app.post("/review",upload.none(),(req,res)=>{
+  // let sessionId = req.cookies.sid;
+  // let username = sessions[sessionId];
+  let itemId = req.body.id
+  dbo.collection("review").find({ _id: ObjectID(item) }, (err, it) => {
+    console.log(itemId, "item");
+    if (err){
+      console.log(err,"add to review");
+      res.send({success:false});
+    }
+    else {
+       res.send()
+      }
+    })
+});
 app.post("/addToCart", upload.none(), (req, res) => {
   let sessionId = req.cookies.sid;
   let username = sessions[sessionId];

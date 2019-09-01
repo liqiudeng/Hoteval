@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 
-class Header extends Component {
+class UnconnectedHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,36 +32,36 @@ class Header extends Component {
       return (
         <div className="nav-wrapper grey darken-3">
           <div className="flex container">
-            <div className="brand-logo">
+            <div>
               <Link to="/">
-                <img src="logo.png" height="50px" />{" "}
+                <img src="/icons8-mobile-home-64.png" height="50px" />
               </Link>
             </div>
             <div className="flex container">
-              <div>
+              <div className="btn z-depth-0">
                 <Link to="/search">
-                  <img
-                    src="https://img.icons8.com/ios/50/000000/search--v1.png"
-                    width="12px"
-                  />
                   {"   "}
                   Search
+                  <img
+                    src="https://img.icons8.com/ios/50/000000/search--v1.png"
+                    width="20px"
+                  />
                 </Link>
               </div>
-              <div className="right">
-                <div>
-                  {" "}
-                  <Link to="/login">Login</Link>
-                </div>
-                <div>
-                  <Link to="/signup">Signup</Link>
-                </div>
+            </div>
+            <div>
+              <div className="btn z-depth-0">
+                {" "}
+                <Link to="/login">Login</Link>
               </div>
-              <div className="right">
-                <NavLink to="/shopping-cart">
-                  <img src="cart1.png" width="50px" />
-                </NavLink>
+              <div className="btn z-depth-0">
+                <Link to="/signup">Signup</Link>
               </div>
+            </div>
+            <div className="right">
+              <NavLink to="/shopping-cart">
+                <img src="/cart1.png" width="50px" />
+              </NavLink>
             </div>
           </div>
         </div>
@@ -70,9 +70,9 @@ class Header extends Component {
       return (
         <div className="nav-wrapper grey darken-3">
           <div className="flex container">
-            <div className="brand-logo">
+            <div>
               <Link to="/">
-                <img src="icons8-mobile-home-64.png" height="40px" />{" "}
+                <img src="/icons8-mobile-home-64.png" height="40px" />{" "}
               </Link>
             </div>
             <div>
@@ -80,20 +80,17 @@ class Header extends Component {
                 <h3 className="lgo">Welcome to Montreal</h3>
               </Link>
             </div>
-            <div className="log-cart-in">
+            <div>
               <div>
                 <Link to="/search">
                   <img
                     src="https://img.icons8.com/ios/50/000000/search--v1.png"
-                    width="12px"
+                    width="20px"
                   />
                   {"   "}
                   Search
                 </Link>
               </div>
-              {/* <div>
-                <Link to="/new-listing">Create Listing</Link>
-              </div> */}
               <div>
                 <div>
                   <a>
@@ -103,14 +100,12 @@ class Header extends Component {
                   </a>
                 </div>
                 <div>
-                  <a className="log-out-link" onClick={this.logoutHandler}>
-                    Logout
-                  </a>
+                  <a onClick={this.logoutHandler}>Logout</a>
                 </div>
               </div>
-              <div>
+              <div className="white-text">
                 <NavLink to="/shopping-cart">
-                  <img src="cart1.png" width="50px" />
+                  <img src="/cart1.png" width="50px" />
                 </NavLink>{" "}
                 ({this.props.addToCartItems})
               </div>
@@ -130,5 +125,5 @@ let mapStateToProps = storeState => {
   };
 };
 
-let connectedHeader = connect(mapStateToProps)(Header);
-export default connectedHeader;
+let Header = connect(mapStateToProps)(UnconnectedHeader);
+export default Header;

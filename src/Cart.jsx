@@ -87,7 +87,7 @@ class UnconnectedCart extends Component {
 
   render = () => {
     console.log(this.state.username);
-    if (this.props.username === undefined) {
+    if (this.props.username === undefined || "") {
       return (
         <div>
           <Login />
@@ -97,41 +97,40 @@ class UnconnectedCart extends Component {
     return (
       <div>
         <div>
-          <div className="title container">Shopping Cart</div>
+          <div className="title container">Book List</div>
           <div className="flex container">
-            <div className="itemInCart">Item</div>
-            <div className="SubtotalInCart">Subtotal</div>
+            {this.state.result.map(item => {
+              return (
+                <div className="checkoutBox container">
+                  <img className="imgCart" src={item.images[0]} />
+                  <div>{item.title}</div>
+                  
+                  <form onSubmit={this.deleteItem}>
+                    <input
+                      className="removeButton"
+                      type="submit"
+                      onClick={() => {
+                        this.setState({ id: item._id });
+                      }}
+                      value="delete"
+                    />
+                  </form>
+                  <div className="checkoutprice">${item.price}</div>
+                </div>
+              );
+            })}
           </div>
-          {this.state.result.map(item => {
-            return (
-              <div className="checkoutBox container">
-                <img className="imgCart" src={item.images[0]} />
-                <div>{item.title}</div>
-                <form onSubmit={this.deleteItem}>
-                  <input
-                    className="removeButton"
-                    type="submit"
-                    onClick={() => {
-                      this.setState({ id: item._id });
-                    }}
-                    value="Remove"
-                  />
-                </form>
-                <div className="checkoutprice">${item.price}</div>
-              </div>
-            );
-          })}
           <div className="totalBox container">
             Grand total{" "}
             <span className="checkoutprice"> ${this.state.total}</span>
           </div>
           <div className="flex container pay">
-            <div className="cart-link">
+            {/* <div className="cart-link">
               {" "}
               <Link to={"/"}>
                 <span className="cart-arrow">←</span>Return to marketplace
               </Link>
-            </div>
+            </div> */}
             <div className="payButton">
               Procceed to Payment
               <StripeCheckout
