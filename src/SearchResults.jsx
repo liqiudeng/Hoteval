@@ -13,9 +13,9 @@ class UnconnectedSearchResults extends Component {
       if (this.props.inStock && !each.inStock) return false;
       else
         return (
-          (title.includes(this.props.query.toLowerCase()) ||
-            desc.includes(this.props.query.toLowerCase())) &&
-          (each.price >= this.props.min && each.price <= this.props.max)
+          title.includes(this.props.query.toLowerCase()) ||
+          desc.includes(this.props.query.toLowerCase())
+          // (each.price >= this.props.min && each.price <= this.props.max)
         );
     });
 
@@ -23,11 +23,16 @@ class UnconnectedSearchResults extends Component {
       <div className="flex container searchBarResault">
         {searchResults.map(each => {
           return (
-            <div className="row">
-              <div className="col s12">
+            <div className="container">
+              <div className="form-wrap">
                 <div>
                   <Link to={"/itemDescription/" + each._id}>
-                    <img src={each.images[0]} width="100px" />
+                    {/* <img
+                      className="fit-images"
+                      src={each.images[0]}
+                      height="80px"
+                      width="100px"
+                    /> */}
                   </Link>{" "}
                 </div>
                 <div>

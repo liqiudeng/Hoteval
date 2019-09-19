@@ -63,15 +63,11 @@ class Footer extends Component {
             </li>
           </ul>
         </div>
-        <div className="container">
-          <p>Back to Top</p>
-          <p className="footer-copy">
-            &copy; 2019 Hoteval – All Rights Reserved
-          </p>
+        <div className="clr"></div>
+        <div id="main-footer">
+          <p>&copy; 2019 Hoteval – All Rights Reserved</p>
         </div>
-        <nav>
-          
-        </nav>
+        
       </div>
     );
   };

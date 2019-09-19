@@ -8,9 +8,14 @@ let reducer = (state, action) => {
     return { ...state, searchQuery: action.typedSearch };
   }
   if (action.type === "all-items") {
-    let newList = action.allItems;
-    newList = newList.reverse();
-    return { ...state, allItems: newList };
+    return { ...state, allItems: action.allItems };
+  }
+  if (action.type === "set-messages") {
+    console.log("messages", action.messages);
+    return { ...state, allMessages: action.messages };
+  }
+  if (action.type === "set-usersrecord") {
+    return { ...state, usersRecord: action.usersRecord };
   }
   if (action.type === "username") {
     return {
@@ -43,6 +48,7 @@ let reducer = (state, action) => {
 
   if (action.type === "removeToCart") {
     let newCartNumber = action.removeItems - 1;
+    // if ((newCartNumber = 0)) newCartNumber = 0;
     console.log(newCartNumber);
     return { ...state, addToCartItems: newCartNumber };
   }
@@ -62,7 +68,9 @@ const store = createStore(
     cartList: [],
     addToCartItems: 0,
     min: 0,
-    max: 100000
+    max: 1000,
+    allMessages: [],
+    usersRecord: []
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );

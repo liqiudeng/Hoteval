@@ -1,20 +1,20 @@
 import { connect } from "react-redux";
 import React, { Component } from "react";
-
+import { Link } from "react-router-dom";
 class UnconnectedSearch extends Component {
   handleStock = evt => {
     let inStock = evt.target.checked;
     console.log(inStock); // true | false
     this.props.dispatch({ type: "inStock", stock: inStock });
   };
-  handleMinimumPrice = evt => {
-    let price = parseInt(evt.target.value);
-    this.props.dispatch({ type: "minimum-price", price: price });
-  };
-  handleMaximumPrice = evt => {
-    let price = parseInt(evt.target.value);
-    this.props.dispatch({ type: "maximum-price", price: price });
-  };
+  // handleMinimumPrice = evt => {
+  //   let price = parseInt(evt.target.value);
+  //   this.props.dispatch({ type: "minimum-price", price: price });
+  // };
+  // handleMaximumPrice = evt => {
+  //   let price = parseInt(evt.target.value);
+  //   this.props.dispatch({ type: "maximum-price", price: price });
+  // };
 
   handleQuery = evt => {
     console.log("Typed search:", evt.target.value);
@@ -23,62 +23,58 @@ class UnconnectedSearch extends Component {
       typedSearch: evt.target.value
     });
   };
-  handleCloseSearch = () => {
-    this.props.dispatch({
-      type: "search",
-      typedSearch: ""
-    });
-    window.history.back();
-  };
+  // handleCloseSearch = () => {
+  //   this.props.dispatch({
+  //     type: "search",
+  //     typedSearch: ""
+  //   });
+  //   window.history.back();
+  // };
   render = () => {
     return (
       <div>
-        <div className="container white">
-          <div className="container">
-            <div>
-              <form>
-                {/* <label>
-                  <input
-                    type="checkbox"
-                    onChange={this.handleStock}
-                    checked={this.props.inStock}
-                  />
-                  <span>inStock</span>
-                </label> */}
-                <div className="input-field">
-                  <span>Minimum price</span>
-                  <input
-                    type="number"
-                    onChange={this.handleMinimumPrice}
-                    value={this.props.minPrice}
-                    placeholder="0.."
-                  />
-                </div>
-
-                <div className="input-field">
-                  <span>Maximum price</span>
-                  <input
-                    type="number"
-                    onChange={this.handleMaximumPrice}
-                    value={this.props.maxPrice}
-                    placeholder="100000..."
-                  />
-                </div>
-                <input
-                  type="text"
-                  onChange={this.handleQuery}
-                  value={this.props.query}
-                  placeholder="Type your key word here...."
-                />
-                <a onClick={this.handleCloseSearch}>
-                  <img
-                    src="https://img.icons8.com/windows/96/000000/multiply.png"
-                    width="25px"
-                  />
-                </a>
-              </form>
+        <div className="searchPage">
+          <form className="container form-warp">
+            <div className="form-group">
+              <input
+                type="checkbox"
+                onChange={this.handleStock}
+                checked={this.props.inStock}
+              />
+              <span className="text-primary">inStock</span>
             </div>
-          </div>
+
+            {/* <div className="form-group">
+              <span className="text-primary">Minimum price</span>
+              <input
+                type="number"
+                onChange={this.handleMinimumPrice}
+                value={this.props.minPrice}
+                placeholder="0.."
+              />
+            </div>
+
+            <div className="form-group">
+              <span className="text-primary">Maximum price</span>
+              <input
+                type="number"
+                onChange={this.handleMaximumPrice}
+                value={this.props.maxPrice}
+                placeholder="100000..."
+              />
+            </div> */}
+            <div className="form-group py-3">
+              <input
+                type="text"
+                onChange={this.handleQuery}
+                value={this.props.query}
+                placeholder="Type your key word here...."
+              />
+              <Link to="/">
+                <i className="fas fa-times-circle fa-1x"></i>
+              </Link>
+            </div>
+          </form>
         </div>
       </div>
     );

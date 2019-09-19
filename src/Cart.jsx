@@ -98,13 +98,13 @@ class UnconnectedCart extends Component {
       <div>
         <div>
           <div className="title container">Book List</div>
-          <div className="flex container">
+          <div className="container">
             {this.state.result.map(item => {
               return (
                 <div className="checkoutBox container">
                   <img className="imgCart" src={item.images[0]} />
                   <div>{item.title}</div>
-                  
+
                   <form onSubmit={this.deleteItem}>
                     <input
                       className="removeButton"

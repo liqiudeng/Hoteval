@@ -28,11 +28,20 @@ app.use("/", express.static("build")); // Needed for the HTML and JS files
 app.use("/", express.static("public")); // Needed for local assets
 
 // Your endpoints go after this line
+app.post("/help", upload.none(), (req, res) => {
+  let firstName = req.body.firstName;
+  let lastName = req.body.lastName;
+  let email = req.body.email;
+  let message = req.body.message;
+  dbo.collection("help").insertOne({ firstName, lastName, email, message });
+  res.json({ success: true });
+});
 app.post("/signup", upload.none(), (req, res) => {
   let username = req.body.username;
   let fName = req.body.firstName;
   let lName = req.body.lastName;
   let password = req.body.password;
+
   if (username !== "" && password !== "") {
     dbo.collection("users").findOne({ username: username }, (err, user) => {
       console.log(user, "user");
@@ -51,7 +60,19 @@ app.post("/signup", upload.none(), (req, res) => {
         dbo
           .collection("users")
           .insertOne({ username, password: sha1(password), fName, lName });
-        res.send({ success: true });
+        //operate the login actions
+        let sid = Math.floor(Math.random() * 10000000);
+        sessions[sid] = username;
+        res.cookie("sid", sid);
+        //send the info to front end
+        console.log(username, "000000000000000000000");
+        res.send({
+          success: true,
+          username: username,
+          sid: sid,
+          fName: fName,
+          lName: lName
+        });
         return;
       }
     });
@@ -103,34 +124,121 @@ app.get("/logout", (req, res) => {
   let sessionId = req.cookies.sid;
   delete sessions[sessionId];
 });
-// app.get("/send-items", (req, res) => {
-//   dbo
-//     .collection("items")
-//     .find({})
-//     .toArray((err, items) => {
-//       if (err) {
-//         console.log("error", err);
-//         res.send({ success: false });
-//         return;
-//       }
-//       res.send(JSON.stringify(items));
-//     });
-// });
-app.post("/review",upload.none(),(req,res)=>{
-  // let sessionId = req.cookies.sid;
-  // let username = sessions[sessionId];
-  let itemId = req.body.id
-  dbo.collection("review").find({ _id: ObjectID(item) }, (err, it) => {
-    console.log(itemId, "item");
-    if (err){
-      console.log(err,"add to review");
-      res.send({success:false});
-    }
-    else {
-       res.send()
-      }
-    })
+app.post("/onlineService", upload.none(), (req, res) => {
+  console.log("post oinlineService", req.body);
+  let sessionId = req.cookies.sid;
+  let username = sessions[sessionId];
+  let message = req.body.message;
+  let incomingMessage = { username, message };
+  if (username !== "") {
+    dbo
+      .collection("onlineService")
+      .findOne({ username: username }, (err, onlineService) => {
+        console.log("online", onlineService);
+        if (err) {
+          console.log(err, "online err");
+          res.json({ success: false });
+          return;
+        } else {
+          let NewMessage = [];
+          if (onlineService.messages !== undefined) {
+            NewMessage = onlineService.messages;
+            NewMessage.push(incomingMessage);
+          } else {
+            NewMessage = [];
+            NewMessage.push(incomingMessage);
+          }
+          dbo.collection("onlineService").findOneAndUpdate(
+            { username: username },
+            {
+              $set: {
+                messages: NewMessage
+              }
+            }
+          );
+          res.json({ success: true, messages: NewMessage });
+        }
+      });
+  }
 });
+app.get("/listingUsers", upload.none(), (req, res) => {
+  let sessionId = req.cookies.sid;
+  let username = sessions[sessionId];
+  // dbo.collection("onlineService").findOne({ username: username });
+  // let userRecorde=[];
+  res.json({ success: true, username: username });
+});
+
+app.get("/listingMessages", upload.none(), (req, res) => {
+  let sessionId = req.cookies.sid;
+  let username = sessions[sessionId];
+
+  dbo
+    .collection("onlineService")
+    .findOne({ username: username }, (err, record) => {
+      if (err) {
+        console.log("error", err);
+        res.send({ success: false });
+        return;
+      }
+      let elemts = [];
+      if (record !== null) elemts = record;
+      console.log("onlineService");
+      res.json({ success: true, messages: elemts.messages });
+    });
+});
+
+app.post("/review", upload.none(), (req, res) => {
+  let _id = req.body._id;
+  console.log("id", _id);
+  dbo.collection("items").findOne({ _id: ObjectID(_id) }, (err, item) => {
+    if (err) {
+      console.log("error", err);
+      res.send({ success: false });
+      return;
+    }
+    res.send(JSON.stringify({ success: true, review: item.review }));
+  });
+});
+
+app.post("/addToReview", upload.none(), (req, res) => {
+  let sessionId = req.cookies.sid;
+  let username = sessions[sessionId];
+
+  let item = req.body._id;
+  let review = req.body.review;
+  let rev = { username: username, review: review };
+  dbo.collection("items").findOne({ _id: ObjectID(item) }, (err, it) => {
+    console.log(it._id, "it");
+    console.log(item, "item");
+    if (err) {
+      console.log(err, "add to comment error");
+      res.send({ success: false });
+    }
+    if (it._id == item) {
+      console.log(it.review, "review");
+      let NewReview = [];
+      if (it.review !== undefined) {
+        NewReview = it.review;
+        NewReview.push(rev);
+      } else {
+        NewReview = [];
+        NewReview.push(rev);
+      }
+      console.log(NewReview, "newreview");
+      dbo.collection("items").findOneAndUpdate(
+        { _id: ObjectID(item) },
+        {
+          $set: {
+            review: NewReview
+          }
+        }
+      );
+      res.send({ success: true, review: review });
+    }
+  });
+});
+
 app.post("/addToCart", upload.none(), (req, res) => {
   let sessionId = req.cookies.sid;
   let username = sessions[sessionId];

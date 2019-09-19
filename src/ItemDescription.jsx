@@ -60,7 +60,7 @@ class UnconnectedItemDescription extends Component {
     return (
       <div>
         <div>
-          <div className="flex container">
+          <div className="flex">
             <div className="left">
               <div className="item-title"> {this.props.item.title}</div>
               <div className="item-price">${this.props.item.price} CAD </div>
@@ -85,11 +85,13 @@ class UnconnectedItemDescription extends Component {
               <img
                 src={this.props.item.images[this.state.currentItemClicked]}
                 height="500px"
+                // style="object-fit:none"
               />
             </div>
             <div className="right">
               <div className="AddtoCartbtn">
                 <button
+                  to={"/shopping-cart"}
                   className="waves-effect waves-light btn pink lighten-2 z-depth-2"
                   onClick={this.handleClick}
                 >
@@ -128,6 +130,8 @@ class UnconnectedItemDescription extends Component {
             </div>
           </div>
         </div>
+
+
         <div className="otherChoose">
           <div className="suggestion container">
             <h5>Similar Hotels</h5>

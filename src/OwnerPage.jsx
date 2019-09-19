@@ -16,7 +16,12 @@ class OwnerPage extends Component {
               <div className="item-sold">
                 <div className="flex each-item">
                   <Link to={"/itemDescription/" + item._id}>
-                    <img src={item.images[0]} height="200px" width="165px" />
+                    <img
+                      className="imageOwner"
+                      src={item.images[0]}
+                      height="200px"
+                      width="165px"
+                    />
                   </Link>
                 </div>
                 {/* <div className="each-item">{item.title}</div> */}

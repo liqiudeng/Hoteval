@@ -82,40 +82,38 @@ class UnconnectedLogin extends Component {
     }
     return (
       <div>
-        <div className="container white">
-          <div>
-            <form className="white" onSubmit={this.handleSubmit}>
-              <h5 className="grey-text text-darken-3">Log in </h5>
-              <div className="input-field">
-                <label htmlFor="email">Email</label>
-                <input type="email" id="email" onChange={this.handleUsername} />
-              </div>
-              <div className="input-field">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  onChange={this.handlePassword}
-                />
-              </div>
-              <div className="input-field">
-                <input
-                  className="btn pink lighten-1 z-depth-0"
-                  type="submit"
-                  value="Login"
-                />
-              </div>
-            </form>
-            <p> Or </p>
+        <div id="container-Login">
+          <form className="form-wrap" onSubmit={this.handleSubmit}>
+            <h1>
+              <span className="text-primary">Log</span> in{" "}
+            </h1>
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input type="email" id="email" onChange={this.handleUsername} />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                onChange={this.handlePassword}
+              />
+            </div>
+
+            <div className="py-3">
+              <input className="btn" type="submit" value="Login" />
+            </div>
+            <div> Haven't registed yet? Please </div>
             <div>
-              <Link className="btn pink lighten-1 z-depth-0" to="/signup">
+              <Link className="btn" to="/signup">
                 Signup
               </Link>
             </div>
-            {/* <div>
+          </form>
+
+          {/* <div>
               <Link to="/">Return to marketplace</Link>
             </div> */}
-          </div>
         </div>
       </div>
     );

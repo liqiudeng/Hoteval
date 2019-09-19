@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
+import "./main.css";
 import Items from "./Items.jsx";
-// import "./signup.css";
+
 class UnconnectedSignup extends Component {
   constructor(props) {
     super(props);
@@ -56,26 +56,29 @@ class UnconnectedSignup extends Component {
       this.setState({ registered: false });
       return;
     } else {
+      //update the info to store
+      console.log(body.username, "body");
+
+      this.setState({ registered: true });
+      //update the chart
       let response2 = await fetch("/update-cart", {
         method: "POST",
         credentials: "include"
       });
+      //obtain info from back end
       let responseBody2 = await response2.text();
       let body2 = JSON.parse(responseBody2);
       console.log("parsed body", body2);
-      if (body.success) {
-        console.log(body2, "body");
-        this.props.dispatch({
-          type: "username",
-          username: body.username,
-          sid: body.sid,
-          firstName: body.fName,
-          lastName: body.lName,
-          cartLength: body2.cartLength,
-          cart: body2.cart
-        });
-        this.setState({ registered: true });
-      }
+      this.props.dispatch({
+        type: "username",
+        username: body.username,
+        sid: body.sid,
+        firstName: body.fName,
+        lastName: body.lName,
+        cartLength: body2.cartLength, //???
+        cart: body2.cart //???
+      });
+      return;
     }
   };
   render = () => {
@@ -94,23 +97,25 @@ class UnconnectedSignup extends Component {
     }
 
     return (
-      <div className="container">
-        <form className="white" onSubmit={this.submitHandler}>
-          <h5 className="grey-text text-darken-3">Sign up</h5>
-          <div className="input field">
+      <div id="container-Login">
+        <form className="form-wrap" onSubmit={this.submitHandler}>
+          <h1>
+            <span className="text-primary">Sign</span> up
+          </h1>
+          <div className="form-group">
             {" "}
             <label htmlFor="firstName">First Name</label>
             <input type="text" id="firstName" onChange={this.firstNameChange} />
           </div>
-          <div className="input field">
+          <div className="form-group">
             <label htmlFor="lastName">Last Name</label>
             <input type="text" id="lastName" onChange={this.lastNameChange} />
           </div>
-          <div className="input field">
+          <div className="form-group">
             <label htmlFor="email">Email</label>
             <input type="email" id="email" onChange={this.usernameChange} />
           </div>
-          <div className="input field">
+          <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
               type="password"
@@ -118,27 +123,14 @@ class UnconnectedSignup extends Component {
               onChange={this.passwordChange}
             />
           </div>
-          {/* <div>
-              <input type="checkbox" id="newsletter" name="newsletter" />
-              <p>Sign me up for emails to get exclusive offers</p>
-            </div> */}
-          <div className="input field">
-            <input
-              className="btn pink lighten-1 z-depth-0"
-              type="submit"
-              value="Register"
-            />
-          </div>
           <div>
-            By clicking “Register”, you agree to our terms of service, privacy
-            policy and cookie policy
+            <input className="button" type="submit" value="Register" />
           </div>
-
-          {/* <div className="link linkSignup">
-            <Link to="/">
-              <span className="arrow">←</span>Return to marketplace
-            </Link>
-          </div> */}
+          <p className="bottom-text">
+            By clicking the Sign Up button, you agree to our
+            <a href="#">Terms & Conditions</a> and
+            <a href="#">Privacy Policy</a>
+          </p>
         </form>
       </div>
     );
