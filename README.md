@@ -4,4 +4,7 @@ Modify the `server.js` file to add endpoints
 
 The frontend code goes in the `/src` directory
 
-https://youtu.be/3TpX77pc9rI
+# Demo
+
+[![Demo Hoteval project]](https://www.youtube.com/watch?v=3TpX77pc9rI)
+
