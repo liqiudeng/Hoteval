@@ -12,10 +12,17 @@ class UnconnectedItems extends Component {
       category: "Recommanded Hotel",
       count: null,
       showMoreClicks: 1,
-      rate: "",
-      showType: "expandable"
+      rate: ""
     };
   }
+  // handleMinimumPrice = evt => {
+  //   let price = parseInt(evt.target.value);
+  //   this.props.dispatch({ type: "minimum-price", price: price });
+  // };
+  // handleMaximumPrice = evt => {
+  //   let price = parseInt(evt.target.value);
+  //   this.props.dispatch({ type: "maximum-price", price: price });
+  // };
 
   handleOneStar = evt => {
     // console.log("rate", rate);
@@ -163,29 +170,12 @@ class UnconnectedItems extends Component {
         return item.category === this.state.category;
       });
 
-    if (this.state.rate === "1 star") {
-      toDisplayItems = this.props.allItems.filter(item => {
+    if (this.state.rate !== "" && this.state.category !== "Recommanded Hotel") {
+      let tofilterItems = this.props.allItems.filter(item => {
         return item.rate === this.state.rate;
       });
-    }
-    if (this.state.rate === "2 stars") {
-      toDisplayItems = this.props.allItems.filter(item => {
-        return item.rate === this.state.rate;
-      });
-    }
-    if (this.state.rate === "3 stars") {
-      toDisplayItems = this.props.allItems.filter(item => {
-        return item.rate === this.state.rate;
-      });
-    }
-    if (this.state.rate === "4 stars") {
-      toDisplayItems = this.props.allItems.filter(item => {
-        return item.rate === this.state.rate;
-      });
-    }
-    if (this.state.rate === "5 stars") {
-      toDisplayItems = this.props.allItems.filter(item => {
-        return item.rate === this.state.rate;
+      toDisplayItems = tofilterItems.filter(item => {
+        return item.category === this.state.category;
       });
     }
 
@@ -199,137 +189,140 @@ class UnconnectedItems extends Component {
     return (
       <div>
         <Banner />
-        {/* <div className="container">
-          
-          <iframe
-            width="600"
-            height="350"
-            src="https://www.youtube.com/embed/OsgiaQnN82I"
-            frameBorder="0"
-            allowFullScreen
-          ></iframe>
-        </div> */}
-        <div>
-          <Link to={"/onlineService"}>
-            <img
-              className="onlineService"
-              src="/icons8-call-male-50.png"
-              width="100px"
-            ></img>
-          </Link>
-        </div>
-        <div className="row">
-          <div className="col s12 m1 14">
-            <div className="row">
-              <div className="col s12 m6">
-                {/* <a href="#nav"> */}
-                <div className="type waves-effect waves-light btn-small">
-                  Type
-                </div>
-                {/* </a> */}
-                {/* <input
-                  type="submit"
-                  value="Type"
-                  onClick={this.handleShowType}
-                /> */}
-                {/* <div className="expandable" id="nav"> */}
-                <div onClick={this.handleHotel}>
-                  <i className="fas fa-hotel fa-3x"></i>{" "}
-                </div>
-                <div onClick={this.handleBoutiqueHotel}>
-                  <i className="fas fa-hotel fa-2x"></i>{" "}
-                </div>
-                <div onClick={this.handleBedBreakfast}>
-                  <i className="fas fa-hotel fa-1x"></i>
-                </div>
-                {/* </div> */}
-              </div>
-            </div>
-            <div className="row">
-              <div className="col s12 m6">
-                {/* <a href="#nav1"> */}
-                <div className="rate waves-effect waves-light btn-small">
-                  Rate
-                </div>
-                {/* </a> */}
-                {/* <div className="expandable" id="nav1"> */}
-                <div onClick={this.handleOneStar}>
-                  <i className="fas fa-star fa-1x"></i>
-                </div>
-                <div
-                  // className="waves-effect waves-teal btn-flat"
-                  onClick={this.handleTwoStar}
-                >
-                  <i className="fas fa-star fa-1x"></i>
-                  <i className="fas fa-star fa-1x"></i>
-                </div>
-                <div
-                  // className="waves-effect waves-teal btn-flat"
-                  onClick={this.handleThreeStar}
-                >
-                  <i className="fas fa-star fa-1x"></i>
-                  <i className="fas fa-star fa-1x"></i>
-                  <i className="fas fa-star fa-1x"></i>
-                </div>
-                <div
-                  // className="waves-effect waves-teal btn-flat"
-                  onClick={this.handleFourStar}
-                >
-                  <i className="fas fa-star fa-1x"></i>
-                  <i className="fas fa-star fa-1x"></i>
-                  <i className="fas fa-star fa-1x"></i>
-                  <i className="fas fa-star fa-1x"></i>
-                </div>
-                <div onClick={this.handleFiveStar}>
-                  <i className="fas fa-star fa-1x"></i>
-                  <i className="fas fa-star fa-1x"></i>
-                  <i className="fas fa-star fa-1x"></i>
-                  <i className="fas fa-star fa-1x"></i>
-                  <i className="fas fa-star fa-1x"></i>
-                </div>
-                {/* </div> */}
-              </div>
-            </div>
-          </div>
-          <div className="col s12 m11 16">
-            <div className="container center">
-              <h4>Featured Hotels</h4>
-              <p onClick={this.handleAll}>
-                {" "}
-                Recommanded Hotel({amountOfItems})
-              </p>{" "}
-            </div>
-            <div className="flex container center searchBarResault">
+
+        <div className="container">
+          <nav className="nav">
+            {/* <a href="#nav"> */}
+            <ul className="nav__menu">
+              <li className="nav__menu-item" onClick={this.handleAll}>
+                Recommanded Hotels
+              </li>
+              {/* <li className="nav__menu-item">
+                Price
+                <ul className="nav__submenu">
+                  <li className="nav__submenu-item">
+                    <span>
+                      Min$
+                      <input
+                        type="number"
+                        onChange={this.handleMinimumPrice}
+                        value={this.props.minPrice}
+                        placeholder="0.."
+                      />
+                    </span>
+                  </li>
+
+                  <li
+                    className="nav__submenu-item"
+                    onClick={this.handleBoutiqueHotel}
+                  >
+                    <span>
+                      Max${" "}
+                      <input
+                        type="number"
+                        onChange={this.handleMaximumPrice}
+                        value={this.props.maxPrice}
+                        placeholder="100000..."
+                      />
+                    </span>
+                  </li>
+                </ul>
+              </li> */}
+              <li className="nav__menu-item">
+                Type
+                <ul className="nav__submenu">
+                  <li className="nav__submenu-item" onClick={this.handleHotel}>
+                    <span>Hotel</span>
+                    {/* <i className="fas fa-hotel fa-3x"></i>{" "} */}
+                  </li>
+                  <li
+                    className="nav__submenu-item"
+                    onClick={this.handleBoutiqueHotel}
+                  >
+                    <span>Boutique Hotel</span>
+                    {/* <i className="fas fa-hotel fa-2x"></i>{" "} */}
+                  </li>
+                  <li
+                    className="nav__submenu-item"
+                    onClick={this.handleBedBreakfast}
+                  >
+                    <span>Bed&Breakfast</span>
+                    {/* <i className="fas fa-hotel fa-1x"></i> */}
+                  </li>
+                </ul>
+              </li>
+
+              <li className="nav__menu-item">
+                Rate
+                <ul className="nav__submenu">
+                  <li
+                    className="nav__submenu-item"
+                    onClick={this.handleOneStar}
+                  >
+                    <span className="fas fa-star fa-1x"></span>
+                  </li>
+                  <li
+                    className="nav__submenu-item"
+                    // className="waves-effect waves-teal btn-flat"
+                    onClick={this.handleTwoStar}
+                  >
+                    <span className="fas fa-star fa-1x"></span>
+                    <span className="fas fa-star fa-1x"></span>
+                  </li>
+                  <li
+                    className="nav__submenu-item"
+                    onClick={this.handleThreeStar}
+                  >
+                    <span className="fas fa-star fa-1x"></span>
+                    <span className="fas fa-star fa-1x"></span>
+                    <span className="fas fa-star fa-1x"></span>
+                  </li>
+                  <li
+                    className="nav__submenu-item"
+                    onClick={this.handleFourStar}
+                  >
+                    <span className="fas fa-star fa-1x"></span>
+                    <span className="fas fa-star fa-1x"></span>
+                    <span className="fas fa-star fa-1x"></span>
+                    <span className="fas fa-star fa-1x"></span>
+                  </li>
+                  <li
+                    className="nav__submenu-item"
+                    onClick={this.handleFiveStar}
+                  >
+                    <span className="fas fa-star fa-1x"></span>
+                    <span className="fas fa-star fa-1x"></span>
+                    <span className="fas fa-star fa-1x"></span>
+                    <span className="fas fa-star fa-1x"></span>
+                    <span className="fas fa-star fa-1x"></span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+
+          <div className="container">
+            <div id="eachItem">
+              <h1 className="py-3">Featured Hotels</h1>
               {toDisplayItems.map(item => {
                 return (
-                  <div>
-                    <div className="z-depth-1">
-                      <Link to={"/itemDescription/" + item._id}>
-                        <img
-                          src={item.images[0]}
-                          height="145px"
-                          width="200px"
-                        />
-                      </Link>
-                    </div>
-                    <div>
-                      <Link
-                        className="black-text text-darken-3"
-                        to={"/itemDescription/" + item._id}
-                      >
-                        {item.title}
-                      </Link>
-                    </div>
-                    <div className="grey-text text-darken-3">${item.price}</div>
+                  <div className="card py-3">
+                    <Link to={"/itemDescription/" + item._id}>
+                      <img src={item.images[0]} height="145px" width="200px" />
+                    </Link>
+
+                    <Link to={"/itemDescription/" + item._id}>
+                      {item.title}
+                    </Link>
+
+                    <div className="text-third">${item.price}</div>
                   </div>
                 );
               })}
             </div>
 
-            <div>
-              <div className="container">
-                <div onClick={this.handleShowMore}>Show more</div>
-              </div>
+            <div className="container">
+              <div onClick={this.handleShowMore}>Show more</div>
             </div>
           </div>
         </div>
@@ -341,6 +334,8 @@ class UnconnectedItems extends Component {
 
 let mapStateToProps = st => {
   return {
+    // minPrice: st.min,
+    // maxPrice: st.max,
     allItems: st.allItems,
     rate: st.rate
   };

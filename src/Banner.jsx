@@ -6,6 +6,18 @@ class Banner extends Component {
     return (
       <div>
         <div id="showcase">
+          <iframe
+            width="180"
+            height="100"
+            src="https://www.youtube.com/embed/OsgiaQnN82I"
+            frameBorder="0"
+            allowFullScreen
+          ></iframe>
+          <div className="onlineService">
+            <Link to={"/onlineService"}>
+              <img src="/icons8-call-male-50.png" width="50px"></img>
+            </Link>
+          </div>
           <div className="container">
             <div className="showcase-content">
               <h1>

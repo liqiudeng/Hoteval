@@ -56,62 +56,87 @@ class UnconnectedOnlineService extends Component {
   };
   render = () => {
     console.log("online", this.props, this.state);
-    if (this.props.usersRecord !== undefined)
+    if (
+      this.props.usersRecord !== undefined &&
+      this.props.messages !== undefined
+    )
       return (
         <div>
           <div className="flex container">
-            <div className="userRecord container card horizontal">
-              <div className="card-image">
-                <img src="/la-ronde.jpg" />
-              </div>
-              <div className="card-stacked">
-                <ul className="card-content">
-                  {this.props.usersRecord.slice(0, 3)} has entered
-                </ul>
-              </div>
+            <div id="userRecord">
+              <img src="/la-ronde.jpg" />
+
+              <ul>{this.props.usersRecord.slice(0, 5)} has entered</ul>
             </div>
-            <div className="userRecord container card vertical">
-              <div className="card-image">
-                <img src="/vieux-montreal.jpg" />
-              </div>
-              <div className="card-stacked">
-                <ul className="card-content">
-                  {this.props.messages.map(message => {
-                    return (
-                      <li>
-                        {message.username.slice(0, 3)} : {message.message}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
+            <div id="serviceMessages">
+              <img src="/vieux-montreal.jpg" />
+
+              <ul>
+                {this.props.messages.map(message => {
+                  return (
+                    <li>
+                      {message.username.slice(0, 5)} : {message.message}
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           </div>
-          <div className="container white">
-            <div className="input-field">
-              <form className="white" onSubmit={this.handleSubmit}>
-                <div className="input-field">
-                  {" "}
-                  <input
-                    type="text"
-                    onChange={this.handleMessage}
-                    // value={this.state.message}
-                    placeholder="Type your words here"
-                  />
-                </div>
-                <div className="input-field">
-                  <input
-                    className="btn pink lighten-1 z-depth-0"
-                    type="submit"
-                    value="Submit"
-                  />
-                </div>
-              </form>
-            </div>
+
+          <div id="form-online">
+            <form className="form-wrap" onSubmit={this.handleSubmit}>
+              <div className="form-group">
+                {" "}
+                <input
+                  type="text"
+                  onChange={this.handleMessage}
+                  // value={this.state.message}
+                  placeholder="Type your words here"
+                />
+              </div>
+              <div className="py-3">
+                <input className="btn" type="submit" value="Submit" />
+              </div>
+            </form>
           </div>
         </div>
       );
-    else return <div>You need have an account</div>;
+    if (
+      this.props.usersRecord !== undefined &&
+      this.props.messages == undefined
+    )
+      return (
+        <div>
+          <div className="flex container">
+            <div id="userRecord">
+              <img src="/la-ronde.jpg" />
+
+              <ul>{this.props.usersRecord.slice(0, 3)} has entered</ul>
+            </div>
+            <div id="serviceMessages">
+              <img src="/vieux-montreal.jpg" />
+            </div>
+          </div>
+
+          <div id="form-online">
+            <form className="form-wrap" onSubmit={this.handleSubmit}>
+              <div className="form-group">
+                {" "}
+                <input
+                  type="text"
+                  onChange={this.handleMessage}
+                  // value={this.state.message}
+                  placeholder="Type your words here"
+                />
+              </div>
+              <div className="py-3">
+                <input className="btn" type="submit" value="Submit" />
+              </div>
+            </form>
+          </div>
+        </div>
+      );
+    else return <h1 className="container text-third py-3">You need have an account</h1>;
   };
 }
 let mapStateToProps = state => {

@@ -159,12 +159,41 @@ app.post("/onlineService", upload.none(), (req, res) => {
           res.json({ success: true, messages: NewMessage });
         }
       });
+  } else {
+    dbo
+      .collection("onlineService")
+      .insertOne({ username: username }, (err, onlineService) => {
+        console.log("online", onlineService);
+        if (err) {
+          console.log(err, "online err");
+          res.json({ success: false });
+          return;
+        } else {
+          let NewMessage = [];
+          if (onlineService.messages !== undefined) {
+            NewMessage = onlineService.messages;
+            NewMessage.push(incomingMessage);
+          } else {
+            NewMessage = [];
+            NewMessage.push(incomingMessage);
+          }
+          dbo.collection("onlineService").findOneAndUpdate(
+            { username: username },
+            {
+              $set: {
+                messages: NewMessage
+              }
+            }
+          );
+          res.json({ success: true, messages: NewMessage });
+        }
+      });
   }
 });
 app.get("/listingUsers", upload.none(), (req, res) => {
   let sessionId = req.cookies.sid;
   let username = sessions[sessionId];
-  // dbo.collection("onlineService").findOne({ username: username });
+  // dbo.collection("onlineService").insertOne({ username: username });
   // let userRecorde=[];
   res.json({ success: true, username: username });
 });

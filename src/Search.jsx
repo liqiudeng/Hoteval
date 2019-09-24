@@ -2,19 +2,15 @@ import { connect } from "react-redux";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 class UnconnectedSearch extends Component {
+  handleClick = evt => {
+    this.props.dispatch({ type: "display" });
+  };
   handleStock = evt => {
     let inStock = evt.target.checked;
     console.log(inStock); // true | false
     this.props.dispatch({ type: "inStock", stock: inStock });
   };
-  // handleMinimumPrice = evt => {
-  //   let price = parseInt(evt.target.value);
-  //   this.props.dispatch({ type: "minimum-price", price: price });
-  // };
-  // handleMaximumPrice = evt => {
-  //   let price = parseInt(evt.target.value);
-  //   this.props.dispatch({ type: "maximum-price", price: price });
-  // };
+ 
 
   handleQuery = evt => {
     console.log("Typed search:", evt.target.value);
@@ -34,44 +30,29 @@ class UnconnectedSearch extends Component {
     return (
       <div>
         <div className="searchPage">
-          <form className="container form-warp">
+          <form className="container form-warp py-3">
             <div className="form-group">
-              <input
-                type="checkbox"
-                onChange={this.handleStock}
-                checked={this.props.inStock}
-              />
-              <span className="text-primary">inStock</span>
+              <div className={this.props.display}>
+                <input
+                  type="checkbox"
+                  onChange={this.handleStock}
+                  checked={this.props.inStock}
+                />
+                <span className="text-primary">inStock</span>
+              </div>
             </div>
 
-            {/* <div className="form-group">
-              <span className="text-primary">Minimum price</span>
+            
+            <div className="form-group py-2">
               <input
-                type="number"
-                onChange={this.handleMinimumPrice}
-                value={this.props.minPrice}
-                placeholder="0.."
-              />
-            </div>
-
-            <div className="form-group">
-              <span className="text-primary">Maximum price</span>
-              <input
-                type="number"
-                onChange={this.handleMaximumPrice}
-                value={this.props.maxPrice}
-                placeholder="100000..."
-              />
-            </div> */}
-            <div className="form-group py-3">
-              <input
+                className="form-search"
                 type="text"
                 onChange={this.handleQuery}
                 value={this.props.query}
                 placeholder="Type your key word here...."
               />
               <Link to="/">
-                <i className="fas fa-times-circle fa-1x"></i>
+                <i className="far fa-arrow-alt-circle-left fa-3x"></i>
               </Link>
             </div>
           </form>
@@ -83,8 +64,7 @@ class UnconnectedSearch extends Component {
 
 let mapStateToProps = st => {
   return {
-    minPrice: st.min,
-    maxPrice: st.max,
+    
     inStock: st.inStock,
     query: st.searchQuery
   };

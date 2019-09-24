@@ -65,60 +65,109 @@ class UnconnectedReviewPage extends Component {
   };
 
   render = () => {
-    return (
-      <div id="review-page" className="bg-light py-3">
-        {/* <div>this.renderListingReview()</div> */}
-        <div className="container">
-          <div className="info-left">
-            <form>
-              <h1 className="l-heading">
-                Comments for{" "}
-                <span className="text-primary">{this.props.item.title}</span>
-              </h1>
+    if (this.state.review !== []) {
+      return (
+        <div id="review-page" className="bg-light py-3">
+          {/* <div>this.renderListingReview()</div> */}
+          <div className="container">
+            <div className="info-left">
+              <form>
+                <h1 className="l-heading">
+                  Comments for{" "}
+                  <span className="text-primary">{this.props.item.title}</span>
+                </h1>
 
-              {/* <input type="text" placeholder="Your name" /> */}
-              <input
-                onChange={this.handleChange}
-                type="text"
-                //   onChange={this.handlecomments}
-                placeholder="Your Comment..."
-              />
-            </form>
-            <form onSubmit={this.SubmitComments}>
-              <input type="submit" value="Add your comments" />
-            </form>
-          </div>
-          <div className="info-right">
-            {" "}
-            <img src={this.props.item.images[0]} height="300px" />
-            <p>${this.props.item.price} CAD</p>
-            <p>{this.props.item.description}</p>
-          </div>
-          <div className="clr"></div>
-          <div id="testimonials" className="py-1">
-            <div className="container">
-              <h2 className="l-heading">What Our Guest Say</h2>
+                {/* <input type="text" placeholder="Your name" /> */}
+                <input
+                  onChange={this.handleChange}
+                  type="text"
+                  //   onChange={this.handlecomments}
+                  placeholder="Your Comment..."
+                />
+              </form>
+              <form onSubmit={this.SubmitComments}>
+                <input type="submit" value="Add your comments" />
+              </form>
+            </div>
+            <div className="info-right">
+              {" "}
+              <img src={this.props.item.images[0]} height="300px" />
+              <p>${this.props.item.price} CAD</p>
+              <p>{this.props.item.description}</p>
+            </div>
+            <div className="clr"></div>
+            <div id="testimonials" className="py-1">
+              <div className="container">
+                <h2 className="l-heading">What Our Guest Say</h2>
 
-              {/* need to change */}
-              <div>
-                {this.state.review.map(review => {
-                  return (
-                    <div className="testimonial bg-primary">
-                      <span className="name">{review.username}: </span>
-                      <span className="review">{review.review}</span>
-                    </div>
-                  );
-                })}
+                {/* need to change */}
+                <div>
+                  {this.state.review.map(review => {
+                    return (
+                      <div className="testimonial bg-primary">
+                        <span className="name">{review.username}</span>{" "}
+                        &nbsp;&nbsp;&nbsp;
+                        <span className="review">{review.review}</span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="container py-3">
-          <Link to="/">Go back to choose Hotel</Link>
+          <div className="container py-3">
+            <Link to="/">Go back to choose Hotel</Link>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div id="review-page" className="bg-light py-3">
+          {/* <div>this.renderListingReview()</div> */}
+          <div className="container">
+            <div className="info-left">
+              <form>
+                <h1 className="l-heading">
+                  Comments for{" "}
+                  <span className="text-primary">{this.props.item.title}</span>
+                </h1>
+
+                {/* <input type="text" placeholder="Your name" /> */}
+                <input
+                  onChange={this.handleChange}
+                  type="text"
+                  //   onChange={this.handlecomments}
+                  placeholder="Your Comment..."
+                />
+              </form>
+              <form onSubmit={this.SubmitComments}>
+                <input type="submit" value="Add your comments" />
+              </form>
+            </div>
+            <div className="info-right">
+              {" "}
+              <img src={this.props.item.images[0]} height="300px" />
+              <p>${this.props.item.price} CAD</p>
+              <p>{this.props.item.description}</p>
+            </div>
+            <div className="clr"></div>
+            <div id="testimonials" className="py-1">
+              <div className="container">
+                <h2 className="l-heading">What Our Guest Say</h2>
+
+                {/* need to change */}
+                <div>No review</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="container py-3">
+            <Link to="/">Go back to choose Hotel</Link>
+          </div>
+        </div>
+      );
+    }
   };
 }
 

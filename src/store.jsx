@@ -2,10 +2,13 @@ import { createStore } from "redux";
 // import { ifError } from "assert";
 let reducer = (state, action) => {
   if (action.type == "inStock") {
-    return { ...state, inStock: action.price };
+    return { ...state, inStock: action.stock };
   }
   if (action.type === "search") {
     return { ...state, searchQuery: action.typedSearch };
+  }
+  if (action.type === "display") {
+    return { state, dispaly: "Hidden" };
   }
   if (action.type === "all-items") {
     return { ...state, allItems: action.allItems };
@@ -70,7 +73,8 @@ const store = createStore(
     min: 0,
     max: 1000,
     allMessages: [],
-    usersRecord: []
+    usersRecord: [],
+    dispaly: "Hidden"
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );

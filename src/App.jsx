@@ -39,9 +39,9 @@ class App extends Component {
         <div>
           <SearchResults />
         </div>
-        <div>
+        {/* <div>
           <Footer />
-        </div>
+        </div> */}
       </div>
     );
   };

@@ -79,7 +79,7 @@ class Help extends Component {
 
             <p className="py-1">2000, av. Miss Verdun, QC H9C 2U1</p>
 
-            <a className="py-3" href="/map">
+            <a className="text-third py-3" href="/map">
               Go to map
             </a>
           </div>
