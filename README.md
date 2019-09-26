@@ -6,5 +6,4 @@ The frontend code goes in the `/src` directory
 
 # Demo
 
-[![Demo Hoteval project]](https://youtu.be/BEcLHOnT1Uc)
-
+[![Demo Hoteval project]](https://youtu.be/d0pVo5E_8Eo)
