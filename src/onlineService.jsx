@@ -66,7 +66,7 @@ class UnconnectedOnlineService extends Component {
             <div id="userRecord">
               <img src="/la-ronde.jpg" />
 
-              <ul>{this.props.usersRecord.slice(0, 5)} has entered</ul>
+              <ul>{this.props.usersRecord} has entered</ul>
             </div>
             <div id="serviceMessages">
               <img src="/vieux-montreal.jpg" />
@@ -75,7 +75,7 @@ class UnconnectedOnlineService extends Component {
                 {this.props.messages.map(message => {
                   return (
                     <li>
-                      {message.username.slice(0, 5)} : {message.message}
+                      {message.username} : {message.message}
                     </li>
                   );
                 })}
@@ -111,7 +111,7 @@ class UnconnectedOnlineService extends Component {
             <div id="userRecord">
               <img src="/la-ronde.jpg" />
 
-              <ul>{this.props.usersRecord.slice(0, 3)} has entered</ul>
+              <ul>{this.props.usersRecord}has entered</ul>
             </div>
             <div id="serviceMessages">
               <img src="/vieux-montreal.jpg" />
@@ -136,7 +136,10 @@ class UnconnectedOnlineService extends Component {
           </div>
         </div>
       );
-    else return <h1 className="container text-third py-3">You need have an account</h1>;
+    else
+      return (
+        <h1 className="container text-third py-3">You need have an account</h1>
+      );
   };
 }
 let mapStateToProps = state => {

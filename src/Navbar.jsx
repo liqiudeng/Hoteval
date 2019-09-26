@@ -27,25 +27,25 @@ class NavBAr extends Component {
               </div>        */}
             <ul>
               <li>
-                <a className="current" href="/">
+                <Link className="current" to="/">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/search">
+                <Link to="/search">
                   {"   "}
 
                   <div>
                     Search<span className="fas fa-search fa-1x"></span>
                   </div>
-                </a>
+                </Link>
               </li>
               <li>
                 {" "}
-                <a href="/login">Login</a>
+                <Link to="/login">Login</Link>
               </li>
               <li>
-                <a href="/signup">Signup</a>
+                <Link to="/signup">Signup</Link>
               </li>
               {/* <li>
               <NavLink to="/shopping-cart">
@@ -53,7 +53,7 @@ class NavBAr extends Component {
               </NavLink>
             </li> */}
               <li>
-                <a href="/aboutUs">Help</a>
+                <Link to="/aboutUs">Help</Link>
               </li>
             </ul>
           </div>

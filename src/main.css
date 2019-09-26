@@ -258,6 +258,12 @@ i {
   width: 60%;
   min-height: 100%;
 }
+#review-page .info-left .form-group-review textarea {
+  margin: 30px auto;
+  font-size: 18px;
+  width: 60%;
+  height: 116px;
+}
 /* Testimonials */
 #testimonials {
   height: 100%;
@@ -651,17 +657,22 @@ ul li {
 .otherChoose {
   margin-bottom: 80px;
 }
-.title {
-  font-size: 18px;
-  margin-top: 100px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
 
+.totalBox {
+  text-align: center;
+  margin-top: 5px;
+  border-top: 1px solid lightgrey;
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  align-content: center;
+  border-right: none;
+  border-left: none;
+  border-bottom: none;
+}
 .checkoutBox {
   text-align: center;
   margin-top: 5px;
-  /* margin-left: 240px; */
   border-top: 1px solid lightgrey;
   display: flex;
   justify-content: space-between;
@@ -694,20 +705,6 @@ ul li {
   margin-left: 10px;
   margin-right: 10px;
   color: brown;
-}
-
-.totalBox {
-  text-align: right;
-  margin-top: 10px;
-  margin-left: 5px;
-  border-top: 1px solid lightgrey;
-  width: 100%;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  align-content: center;
-  border-right: none;
-  border-left: none;
-  border-bottom: none;
 }
 
 /* .payButton {

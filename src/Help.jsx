@@ -66,6 +66,9 @@ class Help extends Component {
   render = () => {
     return (
       <div className="helpPage container">
+        <div className="container py-3">
+          <Link to="/">Go back to choose Hotel</Link>
+        </div>
         <div id="features">
           <div className="box bg-light">
             <i className="fas fa-hotel fa-3x"></i>

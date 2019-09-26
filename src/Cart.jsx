@@ -97,40 +97,40 @@ class UnconnectedCart extends Component {
     return (
       <div>
         <div>
-          <div className="title container">Book List</div>
-          <div className="container">
-            {this.state.result.map(item => {
-              return (
-                <div className="checkoutBox container">
-                  <img className="imgCart" src={item.images[0]} />
-                  <div>{item.title}</div>
+          <div className="l-heading container py-3">Book List</div>
 
-                  <form onSubmit={this.deleteItem}>
-                    <input
-                      className="removeButton"
-                      type="submit"
-                      onClick={() => {
-                        this.setState({ id: item._id });
-                      }}
-                      value="delete"
-                    />
-                  </form>
-                  <div className="checkoutprice">${item.price}</div>
-                </div>
-              );
-            })}
-          </div>
+          {this.state.result.map(item => {
+            return (
+              <div className="checkoutBox container">
+                <img className="imgCart" src={item.images[0]} />
+                <div>{item.title}</div>
+
+                <form onSubmit={this.deleteItem}>
+                  <input
+                    className="removeButton"
+                    type="submit"
+                    onClick={() => {
+                      this.setState({ id: item._id });
+                    }}
+                    value="delete"
+                  />
+                </form>
+                <div className="checkoutprice">${item.price}</div>
+              </div>
+            );
+          })}
+
           <div className="totalBox container">
             Grand total{" "}
             <span className="checkoutprice"> ${this.state.total}</span>
           </div>
           <div className="flex container pay">
-            {/* <div className="cart-link">
+            <div className="cart-link">
               {" "}
               <Link to={"/"}>
-                <span className="cart-arrow">←</span>Return to marketplace
+                <span>Return to HomePage</span>
               </Link>
-            </div> */}
+            </div>
             <div className="payButton">
               Procceed to Payment
               <StripeCheckout

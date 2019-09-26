@@ -219,6 +219,7 @@ app.get("/listingMessages", upload.none(), (req, res) => {
 
 app.post("/review", upload.none(), (req, res) => {
   let _id = req.body._id;
+  
   console.log("id", _id);
   dbo.collection("items").findOne({ _id: ObjectID(_id) }, (err, item) => {
     if (err) {
@@ -386,6 +387,7 @@ app.post("/save-stripe-token", upload.none(), (req, res) => {
       return;
     }
     if (username) {
+      let cartId = user._id;
       dbo
         .collection("cart")
         .updateOne({ _id: ObjectID(cartId) }, { $set: { items: [] } });
